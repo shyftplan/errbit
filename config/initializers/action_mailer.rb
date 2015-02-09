@@ -30,3 +30,7 @@ end
 
   default.reverse_merge!(options_from_config)
 end
+
+ActionMailer::Base.smtp_settings = {
+  enable_starttls_auto: false
+}
