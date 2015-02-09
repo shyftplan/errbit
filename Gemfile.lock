@@ -330,6 +330,8 @@ GEM
     rushover (0.3.0)
       json
       rest-client
+    rvm-capistrano (1.5.0)
+      capistrano (>= 2.15.4)
     sass (3.4.9)
     sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -455,6 +457,7 @@ DEPENDENCIES
   rspec-its
   rspec-rails (~> 3.0)
   rushover
+  rvm-capistrano
   sass-rails
   test-unit
   timecop
