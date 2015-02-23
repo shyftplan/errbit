@@ -12,6 +12,14 @@ GIT
   specs:
     errbit_plugin (0.4.0)
 
+GIT
+  remote: git://github.com/shyftplan/errbit_jira_plugin.git
+  revision: 08762b7b16cf19e6414bbc08e5e77e956464ae0e
+  specs:
+    errbit_jira_plugin (0.2.0)
+      errbit_plugin
+      jira-ruby
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -129,9 +137,6 @@ GEM
     email_spec (1.6.0)
       launchy (~> 2.1)
       mail (~> 2.2)
-    errbit_jira_plugin (0.2.0)
-      errbit_plugin
-      jira-ruby
     erubis (2.7.0)
     execjs (2.0.2)
     fabrication (2.9.0)
@@ -434,7 +439,7 @@ DEPENDENCIES
   draper
   email_spec
   errbit_github_plugin!
-  errbit_jira_plugin
+  errbit_jira_plugin!
   errbit_plugin!
   fabrication
   flowdock

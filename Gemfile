@@ -30,7 +30,7 @@ gem 'draper'
 
 gem 'errbit_plugin', github: 'errbit/errbit_plugin'
 gem 'errbit_github_plugin', github: 'errbit/errbit_github_plugin'
-gem 'errbit_jira_plugin'
+gem 'errbit_jira_plugin', github: 'shyftplan/errbit_jira_plugin'
 
 gem 'dotenv-deployment'
 
