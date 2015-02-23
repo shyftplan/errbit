@@ -80,6 +80,11 @@ group :development do
   gem 'foreman', :require => false
 end
 
+
+group :assets do
+  gem 'therubyracer', :platforms => :ruby
+end
+
 group :test do
   gem 'rspec'
   gem 'rspec-rails', '~> 3.0', require: false
