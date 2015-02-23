@@ -19,5 +19,4 @@ bin
 bundle
 coverage
 *#
-.ruby-version
 .capistrano/metrics
