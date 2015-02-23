@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 RAILS_VERSION = '~> 4.1.8'
 
-ruby ENV['GEMFILE_RUBY_VERSION'] if ENV['GEMFILE_RUBY_VERSION']
+ruby '2.1.1'
 
 gem 'actionmailer', RAILS_VERSION
 gem 'actionpack', RAILS_VERSION
@@ -71,7 +71,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails',   require: false
   gem 'capistrano-rbenv',   require: false
-  gem 'rvm-capistrano'
+  gem 'rvm1-capistrano3', require: false
 
   # better errors
   gem 'better_errors'
