@@ -1,41 +1,71 @@
 class NotificationServices::SlackService < NotificationService
-  Label = "slack"
-  Fields += [
-    [:subdomain, {
-      :placeholder => 'subdomain',
-      :label => 'Subdomain portion for Slack service'
-    }],
-    [:api_token, {
-      :placeholder => 'Slack Integration Token',
-      :label => 'Token'
-    }],
-    [:room_id, {
-      :placeholder => '#general',
-      :label => 'Room where Slack should notify'
+  LABEL = "slack"
+  FIELDS += [
+    [:service_url, {
+      placeholder: 'Slack Hook URL (https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXX)',
+      label:       'Hook URL'
     }]
   ]
 
   def check_params
-    if Fields.detect {|f| self[f[0]].blank? unless f[0] == :room_id }
-      errors.add :base, "You must specify your Slack subdomain and token."
+    if FIELDS.detect { |f| self[f[0]].blank? }
+      errors.add :base, "You must specify your Slack Hook url."
     end
   end
 
-  def url
-    "https://#{subdomain}.slack.com/services/hooks/incoming-webhook?token=#{api_token}"
-  end
-
   def message_for_slack(problem)
-    "[#{problem.app.name}][#{problem.environment}][#{problem.where}]: #{problem.error_class} #{problem_url(problem)}"
+    "[#{problem.app.name}][#{problem.environment}][#{problem.where}]: #{problem.error_class} #{problem.url}"
   end
 
   def post_payload(problem)
-    payload = {:text => message_for_slack(problem) }
-    payload[:channel] = room_id unless room_id.empty?
-    payload.to_json
+    {
+      username:    "Errbit",
+      icon_emoji:  ":collision:",
+      attachments: [
+        {
+          fallback:   message_for_slack(problem),
+          title:      problem.message.to_s.truncate(100),
+          title_link: problem.url,
+          text:       problem.where,
+          color:      "#D00000",
+          fields:     [
+            {
+              title: "Application",
+              value: problem.app.name,
+              short: true
+            },
+            {
+              title: "Environment",
+              value: problem.environment,
+              short: true
+            },
+            {
+              title: "Times Occurred",
+              value: problem.notices_count,
+              short: true
+            },
+            {
+              title: "First Noticed",
+              value: problem.first_notice_at.try(:to_s, :db),
+              short: true
+            }
+          ]
+        }
+      ]
+    }.to_json
   end
 
   def create_notification(problem)
-    HTTParty.post(url, :body => post_payload(problem), :headers => { 'Content-Type' => 'application/json' })
+    HTTParty.post(
+      service_url,
+      body:    post_payload(problem),
+      headers: {
+        'Content-Type' => 'application/json'
+      }
+    )
+  end
+
+  def configured?
+    service_url.present?
   end
 end

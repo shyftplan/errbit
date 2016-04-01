@@ -1,27 +1,56 @@
-describe NotificationService::SlackService, type: 'model' do
-  it "it should send a notification to Slack with channel" do
-    # setup
-    notice = Fabricate :notice
-    notification_service = Fabricate :slack_notification_service, :app => notice.app
-    problem = notice.problem
-
-    # faraday stubbing
-    payload = {:text => notification_service.message_for_slack(problem), :channel => notification_service.room_id}.to_json
-    expect(HTTParty).to receive(:post).with(notification_service.url, :body => payload, :headers => {"Content-Type" => "application/json"}).and_return(true)
-
-    notification_service.create_notification(problem)
+describe NotificationServices::SlackService, type: 'model' do
+  let(:notice) { Fabricate :notice }
+  let(:service_url) do
+    "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXX"
   end
 
-  it "it should send a notification to Slack without a channel" do
+  let(:service) do
+    Fabricate :slack_notification_service, app:         notice.app,
+                                           service_url: service_url
+  end
+
+  it "it should send a notification to Slack with hook url" do
     # setup
-    notice = Fabricate :notice
-    notification_service = Fabricate :slack_notification_service, :app => notice.app, :room_id => ""
     problem = notice.problem
 
     # faraday stubbing
-    payload = {:text => notification_service.message_for_slack(problem)}.to_json
-    expect(HTTParty).to receive(:post).with(notification_service.url, :body => payload, :headers => {"Content-Type" => "application/json"}).and_return(true)
+    payload = {
+      username:    "Errbit",
+      icon_emoji:  ":collision:",
+      attachments: [
+        {
+          fallback:   service.message_for_slack(problem),
+          title:      problem.message.to_s.truncate(100),
+          title_link: problem.url,
+          text:       problem.where,
+          color:      "#D00000",
+          fields:     [
+            {
+              title: "Application",
+              value: problem.app.name,
+              short: true
+            },
+            {
+              title: "Environment",
+              value: problem.environment,
+              short: true
+            },
+            {
+              title: "Times Occurred",
+              value: problem.notices_count,
+              short: true
+            },
+            {
+              title: "First Noticed",
+              value: problem.first_notice_at.try(:to_s, :db),
+              short: true
+            }
+          ]
+        }
+      ]
+    }.to_json
+    expect(HTTParty).to receive(:post).with(service.service_url, body: payload, headers: { "Content-Type" => "application/json" }).and_return(true)
 
-    notification_service.create_notification(problem)
+    service.create_notification(problem)
   end
 end

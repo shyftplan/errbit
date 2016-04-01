@@ -1,17 +1,23 @@
-require 'uri'
+log_level = Logger.const_get Errbit::Config.log_level.upcase
+
+Mongoid.logger.level = log_level
+Mongo::Logger.level = log_level
 
 Mongoid.configure do |config|
-  uri = URI.parse(Errbit::Config.mongo_url)
-  uri.path = "/errbit_#{Rails.env}" if uri.path.empty?
+  uri = if Errbit::Config.mongo_url == 'mongodb://localhost'
+          "mongodb://localhost/errbit_#{Rails.env}"
+        else
+          Errbit::Config.mongo_url
+        end
 
-  config.load_configuration({
-    sessions: {
+  config.load_configuration(
+    clients: {
       default: {
-        uri: uri.to_s
+        uri: uri
       }
     },
     options: {
       use_activesupport_time_zone: true
     }
-  })
+  )
 end

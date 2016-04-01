@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-RAILS_VERSION = '~> 4.1.8'
+RAILS_VERSION = '~> 4.2.5.2'
 
 ruby '2.1.1'
 
@@ -8,31 +8,33 @@ gem 'actionmailer', RAILS_VERSION
 gem 'actionpack', RAILS_VERSION
 gem 'railties', RAILS_VERSION
 
-gem 'moped', '~> 2.0.2'
-gem 'mongoid', '~> 4.0.0'
-
-gem 'mongoid_rails_migrations'
-gem 'devise'
+gem 'actionmailer_inline_css'
+gem 'decent_exposure'
+gem 'devise', '~> 3.5.5'
+gem 'dotenv-rails'
+gem 'draper'
+gem 'errbit_plugin'
+gem 'errbit_github_plugin'
+gem 'font-awesome-rails'
 gem 'haml'
 gem 'htmlentities'
-gem 'rack-ssl', :require => 'rack/ssl'   # force SSL
-
-gem 'useragent'
-gem 'decent_exposure'
-gem 'actionmailer_inline_css'
-gem 'kaminari', '>= 0.14.1'
-gem 'rack-ssl-enforcer', :require => false
+gem 'kaminari', '>= 0.16.3'
+gem 'mongoid', '5.0.2'
+gem 'mongoid_rails_migrations'
+gem 'rack-ssl', require: 'rack/ssl' # force SSL
+gem 'rack-ssl-enforcer', require: false
 gem 'rails_autolink'
+gem 'useragent'
+
 # Please don't update hoptoad_notifier to airbrake.
 # It's for internal use only, and we monkeypatch certain methods
 gem 'hoptoad_notifier', "~> 2.4"
-gem 'draper'
 
-gem 'errbit_plugin', github: 'errbit/errbit_plugin'
-gem 'errbit_github_plugin', github: 'errbit/errbit_github_plugin'
+
 gem 'errbit_jira_plugin', github: 'shyftplan/errbit_jira_plugin'
 
 gem 'dotenv-deployment'
+
 
 # Notification services
 # ---------------------------------------
@@ -40,7 +42,7 @@ gem 'campy'
 # Hipchat
 gem 'hipchat'
 # Google Talk
-gem 'xmpp4r', :require => ["xmpp4r", "xmpp4r/muc"]
+gem 'xmpp4r', require: ["xmpp4r", "xmpp4r/muc"]
 # Hoiio (SMS)
 gem 'hoi'
 # Pushover (iOS Push notifications)
@@ -60,10 +62,11 @@ gem 'yajl-ruby', platform: 'ruby'
 gem 'json', platform: 'jruby'
 
 group :development, :test do
-  gem 'airbrake', :require => false
+  gem 'airbrake', '~> 4.3.5', require: false
   gem 'pry-rails'
   gem 'pry-byebug', platforms: [:mri]
   gem 'quiet_assets'
+  gem 'rubocop', require: false
 end
 
 group :development do
@@ -77,41 +80,41 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', platform: 'ruby'
   gem 'meta_request'
-  gem 'foreman', :require => false
 end
 
 
 group :assets do
-  gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', '0.12.1', :platforms => :ruby
 end
 
 group :test do
-  gem 'rspec'
+  gem 'rspec', '~> 3.3'
   gem 'rspec-rails', '~> 3.0', require: false
   gem 'rspec-activemodel-mocks'
   gem 'rspec-its'
-  gem 'mongoid-rspec', require: false
+  gem 'mongoid-rspec', '~> 3.0.0', require: false
   gem 'fabrication'
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'
-  gem 'database_cleaner'
   gem 'email_spec'
   gem 'timecop'
-  gem 'test-unit', require: 'test/unit'
   gem 'coveralls', require: false
 end
 
 group :heroku, :production do
-  gem 'rails_12factor', require: !!ENV["HEROKU"]
-  gem 'unicorn', require: false, platform: 'ruby'
+  gem 'rails_12factor', require: ENV.key?("HEROKU")
 end
 
+gem 'puma'
+gem 'therubyracer', '0.12.1', platform: :ruby # C Ruby (MRI) or Rubinius, but NOT Windows
 gem 'sass-rails'
-gem 'coffee-rails'
 gem 'uglifier'
 # We can't upgrade because not compatible to jquery >= 1.9.
 # To do that, we need fix the rails.js
 gem 'jquery-rails', '~> 2.1.4'
 gem 'pjax_rails'
 gem 'underscore-rails'
+
+ENV['USER_GEMFILE'] ||= './UserGemfile'
+eval_gemfile ENV['USER_GEMFILE'] if File.exist?(ENV['USER_GEMFILE'])
