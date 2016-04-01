@@ -5,12 +5,12 @@ stdout_path "/var/log/unicorn/unicorn_errbit.log"
 
 listen "/var/run/unicorn/unicorn_errbit.sock"
 
-pid "/home/ojajip/errbit/shared/pids/unicorn.pid"
+pid "/home/ubuntu/errbit/shared/tmp/pids/unicorn.pid"
 
 worker_processes 3 # amount of unicorn workers to spin up
 timeout 30         # restarts workers that hang for 30 seconds
 preload_app true
-listen 8080
+listen 8090
 pid ENV['UNICORN_PID'] if ENV['UNICORN_PID']
 
 # Taken from github: https://github.com/blog/517-unicorn

@@ -35,7 +35,7 @@
 
 namespace :load do
   task :defaults do
-    set :unicorn_pid, -> { "#{shared_path}/pids/unicorn.pid" }
+    set :unicorn_pid, -> { "#{shared_path}/tmp/pids/unicorn.pid" }
     set :unicorn_config_path, -> { File.join(shared_path, "config", "unicorn.rb") }
     set :unicorn_restart_sleep_time, 3
     set :unicorn_roles, -> { :app }
