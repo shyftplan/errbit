@@ -31,7 +31,7 @@ gem 'useragent'
 gem 'hoptoad_notifier', "~> 2.4"
 
 
-gem 'errbit_jira_plugin', github: 'shyftplan/errbit_jira_plugin'
+#gem 'errbit_jira_plugin', github: 'shyftplan/errbit_jira_plugin'
 
 gem 'dotenv-deployment'
 
