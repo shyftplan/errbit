@@ -29,7 +29,7 @@ set :linked_dirs, fetch(:linked_dirs, []) + %w(
   vendor/bundle
 )
 
-set :linked_files, fetch(:linked_files, []) + %w(config/.env)
+set :linked_files, fetch(:linked_files, []) + %w(.env)
 
 set :bundle_flags, '--deployment --binstubs '
 set :bundle_cmd,  "cd #{release_path} && bundle"
