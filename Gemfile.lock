@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/shyftplan/errbit_jira_plugin.git
-  revision: 948013cc22626722a8a52fb0b2f3a4e6028a9a8c
+  revision: 5180758c8e99fc042b5b391349d9c33a96663a12
   specs:
     errbit_jira_plugin (0.3.0)
       errbit_plugin
@@ -156,7 +156,7 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
-    jira-ruby (1.1.0)
+    jira-ruby (1.1.2)
       activesupport
       oauth (~> 0.5, >= 0.5.0)
     jquery-rails (2.1.4)
@@ -185,7 +185,7 @@ GEM
     mime-types-data (3.2016.0221)
     mimemagic (0.3.1)
     mini_portile2 (2.0.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     mongo (2.2.4)
       bson (~> 4.0)
     mongoid (5.0.2)
