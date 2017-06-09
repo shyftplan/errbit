@@ -4,9 +4,9 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, '54.93.193.62'
-role :web, '54.93.193.62'
-role :db,  '54.93.193.62'
+role :app, '35.158.118.33'
+role :web, '35.158.118.33'
+role :db,  '35.158.118.33'
 set :rvm1_ruby_version, "ruby-2.1.1@errbit"
 set :rvm1_type, :system
 
@@ -16,7 +16,7 @@ set :rvm1_type, :system
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '54.93.193.62', user: 'ubuntu', roles: %w(web app db), my_property: :my_value
+server '35.158.118.33', user: 'ubuntu', roles: %w(web app db), my_property: :my_value
 
 # Custom SSH Options
 # ==================
